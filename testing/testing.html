@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Testing Angular JS applications</title>
+
+    <meta name="description" content="Richwebclient">
+    <meta name="author" content="Richwebclient Team">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="../base/reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="../base/reveal.js/css/theme/sky.css" id="theme">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../base/reveal.js/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../base/reveal.js/css/print/pdf.css' : '../base/reveal.js/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../base/reveal.js/lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+    <h3><strong>Testing AngularJS applications</strong></h3>
+    <h2><img class="logo" src="img/AngularJS-large.png"></h2>
+
+    <p>
+        <small>Tomasz Szewców</small>
+    </p>
+</section>
+
+<section>
+    <h2>Agenda</h2>
+    <ol>
+        <li><a href="#/tools">Tools</a></li>
+        <li><a href="#/jasmine-basics">Structuring tests</a></li>
+        <li><a href="#/testing-controllers">Testing Controllers</a></li>
+        <li><a href="#/testing-services">Testing Services</a></li>
+        <li><a href="#/testing-directives">Testing Directives</a></li>
+        <li><a href="#/e2e-tests">E2E tests</a></li>
+    </ol>
+</section>
+<section id="tools">
+    <h3>Tools - unit testing</h3>
+
+    <ul>
+        <li><strong>Karma</strong> - tool used to spawn a web server which loads your application's source code and executes your tests.</li>
+        <li><strong>Jasmine</strong> - BDD framework for JavaScript, provides functions to help with structuring tests and making assertions.</li>
+    </ul>
+    <p><small><a href="https://docs.angularjs.org/guide/unit-testing">https://docs.angularjs.org/guide/unit-testing</a></small></p>
+</section>
+<section>
+    <h3>Tools - e2e testing</h3>
+
+    <ul>
+        <li><strong>Selenium WebDriver</strong> - compact Object Oriented API, which wraps user interactions into methods that can be used to drive the browsers.</li>
+        <li><strong>Protractor</strong> - end to end test framework for AngularJS applications built on top of WebDriver.</li>
+    </ul>
+    <p><small><a href="https://docs.angularjs.org/guide/e2e-testing">https://docs.angularjs.org/guide/e2e-testing</a></small></p>
+</section>
+
+<section id="jasmine-basics">
+    <h2>Structuring tests</h2>
+      <pre><code class="javascript" contenteditable data-trim>
+          describe('A suite', function() {
+      it('contains spec with an expectation', function() {
+        expect(true).toBe(true);
+      });
+});
+      </code></pre>
+</section>
+
+
+<section>
+    <h2>Karma configuration</h2>
+      <pre class="fragment"><code class="javascript" contenteditable data-trim>
+// install Karma
+npm install karma --save-dev
+      </code></pre>
+	        <pre class="fragment"><code class="javascript" contenteditable data-trim>
+// install plugins
+npm install karma-jasmine --save-dev
+npm install karma-phantomjs-launcher --save-dev
+      </code></pre>
+	  <pre class="fragment"><code class="javascript" contenteditable data-trim>
+// run Karma
+./node_modules/karma/bin/karma start / init / run
+// alternative
+npm install -g karma-cli
+karma start / init / run
+      </code></pre>
+	  <p><small><a href="http://karma-runner.github.io/0.13/intro/installation.html">http://karma-runner.github.io/0.13/intro/installation.html</a></small></p>
+</section>
+
+<section>
+    <h2>Karma configuration file</h2>
+      <pre><code class="javascript" contenteditable data-trim>
+// can be created with karma init command
+module.exports = function (config) {
+    config.set({
+        basePath: '',
+        frameworks: [],
+        files: [],
+	hostname: 'localhost',
+        port: 9876,
+        autoWatch: false,
+        browsers: [],
+        singleRun: false,
+    })
+};
+// for debugging in a browser:
+// - set single run to true
+// - select other browser
+      </code></pre>
+	      
+	  <p><small><a href="http://karma-runner.github.io/0.8/config/configuration-file.html">http://karma-runner.github.io/0.8/config/configuration-file.html</a></small></p>
+</section>
+
+<section id="testing-controllers">
+    <h2>Testing a controller</h2>
+      <pre><code class="javascript" contenteditable data-trim>
+          describe('Calculator Controller', function() {
+          'use strict';
+		  
+	  var $scope;
+
+          beforeEach(module('app'));
+
+          beforeEach(inject(function($controller, $rootScope){
+              $scope = $rootScope.$new();
+              $controller('CalculatorCtrl', {$scope: $scope});
+          }));
+
+          describe('factorial tests', function() {
+              it('return 1 for 0!', function() {
+                  // given when then
+                  expect($scope.factorial(0)).toBe(1);
+              });
+          });
+});
+      </code></pre>
+</section>
+
+<section>
+    <h2>Testing controller with mocks</h2>
+      <pre><code class="javascript" contenteditable data-trim>
+		// sample controller code
+angular.module('someModule').controller('SomeCntl', function($scope, $location){
+	'use strict';
+	
+	$scope.goToDialog = function(path){
+		$location.path(path);
+	}
+});
+
+// injection of mocked $location service
+var $scope, locationMock = {
+	path: angular.noop
+};
+			
+beforeEach(inject(function($controller, $rootScope){
+    $scope = $rootScope.$new();
+    $controller('SomeCntl', {$scope: $scope, $location: locationMock});
+}));
+      </code></pre>
+</section>
+
+
+<section id="testing-services">
+        <h2>Testing a service</h2>
+      <pre><code class="javascript" contenteditable data-trim>
+          describe('data service tests', function () {
+          'use strict';
+
+          var someDataService;
+		  
+          beforeEach(module('app'));
+
+          beforeEach(inject(function (_someDataService_) {
+            someDataService = _someDataService_;
+          }));
+
+          describe('get data method', function () {
+              it('should return data', function () {
+                  // given
+                  var data = [];
+                  // when
+                  data = someDataService.getData();
+                  // then
+                  expect(data.length).toEqual(10);
+              });
+          });
+});
+      </code></pre>
+</section>
+
+<section>
+    <h2>Testing service with mocks</h2>
+      <pre><code class="javascript" contenteditable data-trim>
+// sample service code
+angular.module('someModule').factory('serviceUnderTests', function('otherService'){
+	'use strict';
+	var data = [];
+	
+	return {
+		getData: function(){
+			angular.copy(otherService.getData(), data);
+		},
+		getCurrent: function(){
+			return data;
+		}
+	};
+});
+
+// injecting other service with $provide service
+var otherServiceMock = {getData: function(){return [1,2,3]}};
+var serviceUnderTests;
+
+beforeEach(function(){
+	module('someModule');
+	
+	module(function($provide){
+		$provide.value('otherService', otherServiceMock);
+	);
+});
+beforeEach(function(_serviceUnderTests_){
+	serviceUnderTests = _serviceUnderTests_;
+});
+      </code></pre>
+</section>
+
+<section>
+    <h2>Testing with $httpBackend</h2>
+      <pre><code class="javascript" contenteditable data-trim>
+var booksData, $httpBackend;
+
+beforeEach(inject(function (_booksData_, _$httpBackend_) {
+    booksData = _booksData_;
+    $httpBackend = _$httpBackend_;
+}));
+
+afterEach(function () {
+    // then
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
+});
+
+it('should load books', function () {
+    // given
+    var searchParams = {title: 'title', author: 'author'}, books = [], response = [
+        {id: 0, title: 'title1'},
+        {id: 1, title: 'title2'}
+    ];
+    $httpBackend.expectGET('/books-management/books-list/books.json?author=author&title=title').respond(response);
+    // when
+    booksData.getBooks(searchParams).then(function (response) {
+	books = response.data;
+	});
+    $httpBackend.flush();
+    // then
+    expect(books).toEqual(response);
+    });
+      </code></pre>
+</section>
+
+    <section id="testing-directives">
+        <h2>Testing a directive</h2>
+      <pre><code class="javascript" contenteditable data-trim>
+          describe('testing directive', function() {
+          'use strict';
+
+          var $compile, $rootScope;
+
+          beforeEach(module('moduleName'));
+          beforeEach(inject(function(_$compile_, _$rootScope_){
+              $compile = _$compile_;
+              $rootScope = _$rootScope_;
+          }));
+
+          it('should replace the directive with an appropriate content', function() {
+              // given when
+              var element = $compile('<directive-name></directive-name>')($rootScope);
+              $rootScope.$digest();
+              // then
+              expect(element.html()).toContain('expected content');
+          });
+});
+      </code></pre>
+    </section>
+	
+
+
+    <section id="e2e-tests">
+        <h2>E2E tests configuration</h2>
+      <pre class="fragment"><code class="javascript" contenteditable data-trim>
+				// install protractor globally with the node package manager
+npm install -g protractor
+      </code></pre>
+      <pre class="fragment"><code class="javascript" contenteditable data-trim>
+		  // download webdriver 
+webdriver-manager update
+      </code></pre>
+      <pre class="fragment"><code class="javascript" contenteditable data-trim>
+		  // start selenium server
+webdriver-manager start
+      </code></pre>
+        <pre class="fragment"><code class="javascript" contenteditable data-trim>
+			// prepare the configuration file
+exports.config = {
+    seleniumAddress: 'http://localhost:4444/wd/hub',
+    specs: ['todo-spec.js']
+};
+        </code></pre>
+        <pre class="fragment"><code class="javascript" contenteditable data-trim>
+			// run e2e tests
+protractor [name-of-config-file]
+        </code></pre>
+    </section>
+	
+	<section>
+        <h2>Configuration file options</h2>
+		<pre><code class="javascript" contenteditable data-trim>
+			// running tests in other browsers
+exports.config = {
+  seleniumAddress: 'http://localhost:4444/wd/hub',
+  specs: ['spec.js'],
+  capabilities: {
+    browserName: 'firefox'
+  }
+}
+
+// running tests in many browsers
+exports.config = {
+  seleniumAddress: 'http://localhost:4444/wd/hub',
+  specs: ['spec.js'],
+  multiCapabilities: [{
+    browserName: 'firefox'
+  }, {
+    browserName: 'chrome'
+  }]
+}
+        </code></pre>
+        <p><small><a href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js">https://github.com/angular/protractor/blob/master/docs/referenceConf.js</a></small></p>
+    </section>
+
+	<section>
+        <h2>Protractor locators</h2>
+		<pre><code class="javascript" contenteditable data-trim>
+		// by binding
+element(by.binding('item.name'));
+
+// by model
+element(by.model('item.name'));
+
+// by css
+element(by.css('some-css'));
+
+// shorthand for css selectors
+$('my-css') // the same as element(by.css('my-css'))
+
+// by button text
+element(by.buttonText('buttonText'));
+
+// by tag name
+element(by.tagName('tag-name'));
+
+// by repeater
+element.all(by.repeater('repeater'));
+        </code></pre>
+        <p><small><a href="https://angular.github.io/protractor/#/api?view=ProtractorBy">https://angular.github.io/protractor/#/api?view=ProtractorBy</a></small></p>
+    </section>
+	
+	<section>
+        <h2>Actions</h2>
+		<pre><code class="javascript" contenteditable data-trim>
+		var el = element(locator);
+
+// click on the element
+el.click();
+
+// send keys to the element (usually an input)
+el.sendKeys('my text');
+
+// clear the text in an element (usually an input)
+el.clear();
+
+// get the value of an attribute, for example, get the value of an input
+el.getAttribute('value');
+        </code></pre>
+        <p><small><a href="https://angular.github.io/protractor/#/api?view=ElementFinder">https://angular.github.io/protractor/#/api?view=ElementFinder</a></small></p>
+    </section>
+
+    <section>
+        <h2>Page Objects</h2>
+        <ul>
+            <li>The methods represent the services that the page offers</li>
+            <li>Try not to expose the internals of the page</li>
+            <li>Generally don't make assertions</li>
+            <li>Methods return other PageObjects</li>
+            <li>Need not represent an entire page</li>
+            <li>Different results for the same action are modelled as different methods</li>
+        </ul>
+        <p><small><a href="https://code.google.com/p/selenium/wiki/PageObjects">https://code.google.com/p/selenium/wiki/PageObjects</a></small></p>
+    </section>
+	
+	<section>
+        <h2>Debugging</h2>
+         <pre class="fragment"><code class="javascript" contenteditable data-trim>
+// set breakpoint
+browser.pause();
+      </code></pre>
+      <pre class="fragment"><code class="javascript" contenteditable data-trim>
+// continue to the next step
+c
+      </code></pre>
+	        <pre class="fragment"><code class="javascript" contenteditable data-trim>
+// enter interactive mode
+repl
+      </code></pre>
+	  <pre class="fragment"><code class="javascript" contenteditable data-trim>
+// exit debugging
+ctrl + C
+      </code></pre>
+    </section>
+
+</div>
+
+</div>
+<script src="../base/reveal.js/lib/js/head.min.js"></script>
+<script src="../base/reveal.js/js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'concave', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            { src: '../base/reveal.js/lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            } },
+            { src: '../base/reveal.js/plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            } },
+            { src: '../base/reveal.js/plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            } },
+            { src: '../base/reveal.js/plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            } },
+            { src: '../base/reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: '../base/reveal.js/plugin/notes/notes.js', async: true }
+        ]
+    });
+
+</script>
+
+</body>
+</html>
