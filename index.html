@@ -42,7 +42,7 @@
 
 <!-- Any section element inside of this container is displayed as a slide -->
 <div class="slides">
-<section>
+<section id="start">
     <h3><strong>Testing AngularJS applications</strong></h3>
     <h2><img class="logo" src="img/AngularJS-large.png"></h2>
 
@@ -51,7 +51,7 @@
     </p>
 </section>
 
-<section>
+<section id="agenda">
     <h2>Agenda</h2>
     <ol>
         <li><a href="#/tools">Tools</a></li>
@@ -93,7 +93,7 @@
 </section>
 
 
-<section>
+<section id="karma-config">
     <h2>Karma configuration</h2>
       <pre class="fragment"><code class="javascript" contenteditable data-trim>
 // install Karma
@@ -114,7 +114,7 @@ karma start / init / run
 	  <p><small><a href="http://karma-runner.github.io/0.13/intro/installation.html">http://karma-runner.github.io/0.13/intro/installation.html</a></small></p>
 </section>
 
-<section>
+<section id="karma-config-file">
     <h2>Karma configuration file</h2>
       <pre><code class="javascript" contenteditable data-trim>
 // can be created with karma init command
@@ -163,7 +163,7 @@ module.exports = function (config) {
       </code></pre>
 </section>
 
-<section>
+<section id="testing-controller-mocks">
     <h2>Testing controller with mocks</h2>
       <pre><code class="javascript" contenteditable data-trim>
 		// sample controller code
@@ -216,7 +216,7 @@ beforeEach(inject(function($controller, $rootScope){
       </code></pre>
 </section>
 
-<section>
+<section id="testing-services-mocks">
     <h2>Testing service with mocks</h2>
       <pre><code class="javascript" contenteditable data-trim>
 // sample service code
@@ -251,7 +251,7 @@ beforeEach(function(_serviceUnderTests_){
       </code></pre>
 </section>
 
-<section>
+<section id="testing-services-http-backend">
     <h2>Testing with $httpBackend</h2>
       <pre><code class="javascript" contenteditable data-trim>
 var booksData, $httpBackend;
@@ -339,7 +339,7 @@ protractor [name-of-config-file]
         </code></pre>
     </section>
 	
-	<section>
+	<section id="e2e-config-file">
         <h2>Configuration file options</h2>
 		<pre><code class="javascript" contenteditable data-trim>
 			// running tests in other browsers
@@ -365,7 +365,7 @@ exports.config = {
         <p><small><a href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js">https://github.com/angular/protractor/blob/master/docs/referenceConf.js</a></small></p>
     </section>
 
-	<section>
+	<section id="protractor-locators">
         <h2>Protractor locators</h2>
 		<pre><code class="javascript" contenteditable data-trim>
 		// by binding
@@ -392,7 +392,7 @@ element.all(by.repeater('repeater'));
         <p><small><a href="https://angular.github.io/protractor/#/api?view=ProtractorBy">https://angular.github.io/protractor/#/api?view=ProtractorBy</a></small></p>
     </section>
 	
-	<section>
+	<section id="element-actions">
         <h2>Actions</h2>
 		<pre><code class="javascript" contenteditable data-trim>
 		var el = element(locator);
@@ -412,7 +412,7 @@ el.getAttribute('value');
         <p><small><a href="https://angular.github.io/protractor/#/api?view=ElementFinder">https://angular.github.io/protractor/#/api?view=ElementFinder</a></small></p>
     </section>
 
-    <section>
+    <section id="page-objects">
         <h2>Page Objects</h2>
         <ul>
             <li>The methods represent the services that the page offers</li>
@@ -425,7 +425,7 @@ el.getAttribute('value');
         <p><small><a href="https://code.google.com/p/selenium/wiki/PageObjects">https://code.google.com/p/selenium/wiki/PageObjects</a></small></p>
     </section>
 	
-	<section>
+	<section id="e2e-debugging">
         <h2>Debugging</h2>
          <pre class="fragment"><code class="javascript" contenteditable data-trim>
 // set breakpoint
