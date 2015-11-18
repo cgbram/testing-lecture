@@ -51,17 +51,29 @@
     </p>
 </section>
 
-<section id="agenda">
-    <h2>Agenda</h2>
-    <ol>
-        <li><a href="#/tools">Tools</a></li>
-        <li><a href="#/jasmine-basics">Structuring tests</a></li>
-        <li><a href="#/testing-controllers">Testing Controllers</a></li>
-        <li><a href="#/testing-services">Testing Services</a></li>
-        <li><a href="#/testing-directives">Testing Directives</a></li>
-        <li><a href="#/e2e-tests">E2E tests</a></li>
-    </ol>
+<section>
+	<section id="agenda">
+		<h2>Agenda</h2>
+		<ol>
+			<li><a href="#/tools">Tools</a></li>
+			<li><a href="#/jasmine-basics">Structuring tests</a></li>
+			<li><a href="#/testing-controllers">Testing Controllers</a></li>
+			<li><a href="#/testing-services">Testing Services</a></li>
+			<li><a href="#/testing-directives">Testing Directives</a></li>
+			<li><a href="#/e2e-tests">E2E tests</a></li>
+		</ol>
+	</section>
+
+	<section id="exercises">
+		<h2>Exercises</h2>
+		<ol>
+			<li><a href="#/test-controller-exercise">Test a controller</a></li>
+			<li><a href="#/page-object-exercise">Add a page object</a></li>
+		</ol>
+	</section>
 </section>
+
+
 <section id="tools">
     <h3>Tools - unit testing</h3>
 
@@ -97,12 +109,13 @@
     <h2>Karma configuration</h2>
       <pre class="fragment"><code class="javascript" contenteditable data-trim>
 // install Karma
-npm install karma --save-dev
+npm install karma
       </code></pre>
 	        <pre class="fragment"><code class="javascript" contenteditable data-trim>
 // install plugins
-npm install karma-jasmine --save-dev
-npm install karma-phantomjs-launcher --save-dev
+npm install karma-jasmine
+npm install karma-phantomjs-launcher
+npm install karma-chrome-launcher
       </code></pre>
 	  <pre class="fragment"><code class="javascript" contenteditable data-trim>
 // run Karma
@@ -141,25 +154,46 @@ module.exports = function (config) {
 <section id="testing-controllers">
     <h2>Testing a controller</h2>
       <pre><code class="javascript" contenteditable data-trim>
-          describe('Calculator Controller', function() {
+          describe('SampleCntl tests', function() {
           'use strict';
 		  
 	  var $scope;
 
-          beforeEach(module('app'));
+          beforeEach(module('someModule'));
 
           beforeEach(inject(function($controller, $rootScope){
               $scope = $rootScope.$new();
-              $controller('CalculatorCtrl', {$scope: $scope});
+              $controller('SampleCntl', {$scope: $scope});
           }));
 
-          describe('factorial tests', function() {
-              it('return 1 for 0!', function() {
-                  // given when then
-                  expect($scope.factorial(0)).toBe(1);
+          describe('some suite', function() {
+              it('some spec', function() {
+                  // given 
+		  // when 
+		  // then
               });
           });
 });
+      </code></pre>
+</section>
+
+<section id="test-controller-exercise">
+    <h2>Exercise - test a controller</h2>
+      <pre><code class="javascript" contenteditable data-trim>
+      // 1. create a sample angular module
+angular.module('sampleModule', []);
+
+// 2. create a calculator controller with 2 $scope functions
+angular.module('sampleModule').controller('CalculatorCntl', function($scope){
+    'use strict';
+
+    $scope.factorial = function(n){};
+    $scope.division = function(a, b){};
+});
+
+// 3. specify appropriate files in the karma config file
+
+// 4. implement controller's functionality using TDD
       </code></pre>
 </section>
 
@@ -175,13 +209,15 @@ angular.module('someModule').controller('SomeCntl', function($scope, $location){
 	}
 });
 
-// injection of mocked $location service
+// test code
+
 var $scope, locationMock = {
 	path: angular.noop
 };
 			
 beforeEach(inject(function($controller, $rootScope){
     $scope = $rootScope.$new();
+	// injection of mocked $location service
     $controller('SomeCntl', {$scope: $scope, $location: locationMock});
 }));
       </code></pre>
@@ -234,7 +270,7 @@ angular.module('someModule').factory('serviceUnderTests', function('otherService
 	};
 });
 
-// injecting other service with $provide service
+// test code
 var otherServiceMock = {getData: function(){return [1,2,3]}};
 var serviceUnderTests;
 
@@ -242,6 +278,7 @@ beforeEach(function(){
 	module('someModule');
 	
 	module(function($provide){
+		// injecting other service with $provide service
 		$provide.value('otherService', otherServiceMock);
 	);
 });
@@ -444,6 +481,18 @@ repl
 ctrl + C
       </code></pre>
     </section>
+	
+	<section id="page-object-exercise">
+    <h2>Exercise - create a page object</h2>
+      <pre><code class="javascript" contenteditable data-trim>
+      // 1. create a page object for table details dialog with table status getter
+
+// 2. use page object in a test together with other page objects
+// - sign in to table management (use SignInPage)
+// - select the first table in the list click edit button (use TableListPage)
+// - get the table status (create and use TableDetailsPage) and assert it
+      </code></pre>
+</section>
 
 </div>
 
