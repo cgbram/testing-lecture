@@ -73,24 +73,25 @@
 	</section>
 </section>
 
-
-<section id="tools">
-    <h3>Tools - unit testing</h3>
-
-    <ul>
-        <li><strong>Karma</strong> - tool used to spawn a web server which loads your application's source code and executes your tests.</li>
-        <li><strong>Jasmine</strong> - BDD framework for JavaScript, provides functions to help with structuring tests and making assertions.</li>
-    </ul>
-    <p><small><a href="https://docs.angularjs.org/guide/unit-testing">https://docs.angularjs.org/guide/unit-testing</a></small></p>
-</section>
 <section>
-    <h3>Tools - e2e testing</h3>
+	<section id="tools">
+		<h3>Tools - unit testing</h3>
 
-    <ul>
-        <li><strong>Selenium WebDriver</strong> - compact Object Oriented API, which wraps user interactions into methods that can be used to drive the browsers.</li>
-        <li><strong>Protractor</strong> - end to end test framework for AngularJS applications built on top of WebDriver.</li>
-    </ul>
-    <p><small><a href="https://docs.angularjs.org/guide/e2e-testing">https://docs.angularjs.org/guide/e2e-testing</a></small></p>
+		<ul>
+			<li><strong>Karma</strong> - tool used to spawn a web server which loads your application's source code and executes your tests.</li>
+			<li><strong>Jasmine</strong> - BDD framework for JavaScript, provides functions to help with structuring tests and making assertions.</li>
+		</ul>
+		<p><small><a href="https://docs.angularjs.org/guide/unit-testing">https://docs.angularjs.org/guide/unit-testing</a></small></p>
+	</section>
+	<section>
+		<h3>Tools - e2e testing</h3>
+
+		<ul>
+			<li><strong>Selenium WebDriver</strong> - compact Object Oriented API, which wraps user interactions into methods that can be used to drive the browsers.</li>
+			<li><strong>Protractor</strong> - end to end test framework for AngularJS applications built on top of WebDriver.</li>
+		</ul>
+		<p><small><a href="https://docs.angularjs.org/guide/e2e-testing">https://docs.angularjs.org/guide/e2e-testing</a></small></p>
+	</section>
 </section>
 
 <section id="jasmine-basics">
@@ -104,102 +105,104 @@
       </code></pre>
 </section>
 
-
-<section id="karma-config">
-    <h2>Karma configuration</h2>
-      <pre class="fragment"><code class="javascript" contenteditable data-trim>
+<section>
+	<section id="karma-config">
+		<h2>Karma configuration</h2>
+		  <pre class="fragment"><code class="javascript" contenteditable data-trim>
 // install Karma
 npm install karma
-      </code></pre>
-	        <pre class="fragment"><code class="javascript" contenteditable data-trim>
+		  </code></pre>
+				<pre class="fragment"><code class="javascript" contenteditable data-trim>
 // install plugins
 npm install karma-jasmine
 npm install karma-phantomjs-launcher
 npm install karma-chrome-launcher
-      </code></pre>
-	  <pre class="fragment"><code class="javascript" contenteditable data-trim>
+		  </code></pre>
+		  <pre class="fragment"><code class="javascript" contenteditable data-trim>
 // run Karma
 ./node_modules/karma/bin/karma start / init / run
 // alternative
 npm install -g karma-cli
 karma start / init / run
-      </code></pre>
-	  <p><small><a href="http://karma-runner.github.io/0.13/intro/installation.html">http://karma-runner.github.io/0.13/intro/installation.html</a></small></p>
-</section>
+		  </code></pre>
+		  <p><small><a href="http://karma-runner.github.io/0.13/intro/installation.html">http://karma-runner.github.io/0.13/intro/installation.html</a></small></p>
+	</section>
 
-<section id="karma-config-file">
-    <h2>Karma configuration file</h2>
-      <pre><code class="javascript" contenteditable data-trim>
+	<section id="karma-config-file">
+		<h2>Karma configuration file</h2>
+		  <pre><code class="javascript" contenteditable data-trim>
 // can be created with karma init command
 module.exports = function (config) {
-    config.set({
-        basePath: '',
-        frameworks: [],
-        files: [],
+	config.set({
+		basePath: '',
+		frameworks: [],
+		files: [],
 	hostname: 'localhost',
-        port: 9876,
-        autoWatch: false,
-        browsers: [],
-        singleRun: false,
-    })
+		port: 9876,
+		autoWatch: false,
+		browsers: [],
+		singleRun: false,
+	})
 };
 // for debugging in a browser:
 // - set single run to true
 // - select other browser
-      </code></pre>
-	      
-	  <p><small><a href="http://karma-runner.github.io/0.8/config/configuration-file.html">http://karma-runner.github.io/0.8/config/configuration-file.html</a></small></p>
+		  </code></pre>
+			  
+		  <p><small><a href="http://karma-runner.github.io/0.8/config/configuration-file.html">http://karma-runner.github.io/0.8/config/configuration-file.html</a></small></p>
+	</section>
 </section>
 
-<section id="testing-controllers">
-    <h2>Testing a controller</h2>
-      <pre><code class="javascript" contenteditable data-trim>
-          describe('SampleCntl tests', function() {
-          'use strict';
-		  
-	  var $scope;
+<section>
+	<section id="testing-controllers">
+		<h2>Testing a controller</h2>
+		  <pre><code class="javascript" contenteditable data-trim>
+describe('SampleCntl tests', function() {
+	'use strict';
 
-          beforeEach(module('someModule'));
+	var $scope;
 
-          beforeEach(inject(function($controller, $rootScope){
-              $scope = $rootScope.$new();
-              $controller('SampleCntl', {$scope: $scope});
-          }));
+	beforeEach(module('someModule'));
 
-          describe('some suite', function() {
-              it('some spec', function() {
-                  // given 
-		  // when 
-		  // then
-              });
-          });
+	beforeEach(inject(function($controller, $rootScope){
+		$scope = $rootScope.$new();
+		$controller('SampleCntl', {$scope: $scope});
+	}));
+
+	describe('some suite', function() {
+		it('some spec', function() {
+			// given 
+			// when 
+			// then
+		});
+	});
 });
-      </code></pre>
-</section>
+		  </code></pre>
+	</section>
 
-<section id="test-controller-exercise">
-    <h2>Exercise - test a controller</h2>
-      <pre><code class="javascript" contenteditable data-trim>
-      // 1. create a sample angular module
+	<section id="test-controller-exercise">
+		<h2>Exercise - test a controller</h2>
+		  <pre><code class="javascript" contenteditable data-trim>
+	  // 1. create a sample angular module
 angular.module('sampleModule', []);
 
 // 2. create a calculator controller with 2 $scope functions
 angular.module('sampleModule').controller('CalculatorCntl', function($scope){
-    'use strict';
+	'use strict';
 
-    $scope.factorial = function(n){};
-    $scope.division = function(a, b){};
+	$scope.factorial = function(n){};
+	$scope.division = function(a, b){};
 });
 
 // 3. specify appropriate files in the karma config file
 
 // 4. implement controller's functionality using TDD
-      </code></pre>
-</section>
+		  </code></pre>
+	</section>
 
-<section id="testing-controller-mocks">
-    <h2>Testing controller with mocks</h2>
-      <pre><code class="javascript" contenteditable data-trim>
+	<section id="testing-controller-mocks">
+		<h2>Testing controller with mocks</h2>
+		  <pre><code class="javascript" contenteditable data-trim>
 		// sample controller code
 angular.module('someModule').controller('SomeCntl', function($scope, $location){
 	'use strict';
@@ -216,45 +219,46 @@ var $scope, locationMock = {
 };
 			
 beforeEach(inject(function($controller, $rootScope){
-    $scope = $rootScope.$new();
+	$scope = $rootScope.$new();
 	// injection of mocked $location service
-    $controller('SomeCntl', {$scope: $scope, $location: locationMock});
+	$controller('SomeCntl', {$scope: $scope, $location: locationMock});
 }));
-      </code></pre>
+		  </code></pre>
+	</section>
 </section>
 
+<section>
+	<section id="testing-services">
+			<h2>Testing a service</h2>
+		  <pre><code class="javascript" contenteditable data-trim>
+	  describe('data service tests', function () {
+	  'use strict';
 
-<section id="testing-services">
-        <h2>Testing a service</h2>
-      <pre><code class="javascript" contenteditable data-trim>
-          describe('data service tests', function () {
-          'use strict';
+	  var someDataService;
+	  
+	  beforeEach(module('app'));
 
-          var someDataService;
-		  
-          beforeEach(module('app'));
+	  beforeEach(inject(function (_someDataService_) {
+		someDataService = _someDataService_;
+	  }));
 
-          beforeEach(inject(function (_someDataService_) {
-            someDataService = _someDataService_;
-          }));
-
-          describe('get data method', function () {
-              it('should return data', function () {
-                  // given
-                  var data = [];
-                  // when
-                  data = someDataService.getData();
-                  // then
-                  expect(data.length).toEqual(10);
-              });
-          });
+	  describe('get data method', function () {
+		  it('should return data', function () {
+			  // given
+			  var data = [];
+			  // when
+			  data = someDataService.getData();
+			  // then
+			  expect(data.length).toEqual(10);
+		  });
+	  });
 });
-      </code></pre>
-</section>
+		  </code></pre>
+	</section>
 
-<section id="testing-services-mocks">
-    <h2>Testing service with mocks</h2>
-      <pre><code class="javascript" contenteditable data-trim>
+	<section id="testing-services-mocks">
+		<h2>Testing service with mocks</h2>
+		  <pre><code class="javascript" contenteditable data-trim>
 // sample service code
 angular.module('someModule').factory('serviceUnderTests', function('otherService'){
 	'use strict';
@@ -285,44 +289,45 @@ beforeEach(function(){
 beforeEach(function(_serviceUnderTests_){
 	serviceUnderTests = _serviceUnderTests_;
 });
-      </code></pre>
-</section>
+		  </code></pre>
+	</section>
 
-<section id="testing-services-http-backend">
-    <h2>Testing with $httpBackend</h2>
-      <pre><code class="javascript" contenteditable data-trim>
+	<section id="testing-services-http-backend">
+		<h2>Testing with $httpBackend</h2>
+		  <pre><code class="javascript" contenteditable data-trim>
 var booksData, $httpBackend;
 
 beforeEach(inject(function (_booksData_, _$httpBackend_) {
-    booksData = _booksData_;
-    $httpBackend = _$httpBackend_;
+	booksData = _booksData_;
+	$httpBackend = _$httpBackend_;
 }));
 
 afterEach(function () {
-    // then
-    $httpBackend.verifyNoOutstandingExpectation();
-    $httpBackend.verifyNoOutstandingRequest();
+	// then
+	$httpBackend.verifyNoOutstandingExpectation();
+	$httpBackend.verifyNoOutstandingRequest();
 });
 
 it('should load books', function () {
-    // given
-    var searchParams = {title: 'title', author: 'author'}, books = [], response = [
-        {id: 0, title: 'title1'},
-        {id: 1, title: 'title2'}
-    ];
-    $httpBackend.expectGET('/books-management/books-list/books.json?author=author&title=title').respond(response);
-    // when
-    booksData.getBooks(searchParams).then(function (response) {
+	// given
+	var searchParams = {title: 'title', author: 'author'}, books = [], response = [
+		{id: 0, title: 'title1'},
+		{id: 1, title: 'title2'}
+	];
+	$httpBackend.expectGET('/books-management/books-list/books.json?author=author&title=title').respond(response);
+	// when
+	booksData.getBooks(searchParams).then(function (response) {
 	books = response.data;
 	});
-    $httpBackend.flush();
-    // then
-    expect(books).toEqual(response);
-    });
-      </code></pre>
+	$httpBackend.flush();
+	// then
+	expect(books).toEqual(response);
+	});
+		  </code></pre>
+	</section>
 </section>
 
-    <section id="testing-directives">
+<section id="testing-directives">
         <h2>Testing a directive</h2>
       <pre><code class="javascript" contenteditable data-trim>
           describe('testing directive', function() {
@@ -345,46 +350,46 @@ it('should load books', function () {
           });
 });
       </code></pre>
-    </section>
+ </section>
 	
 
-
-    <section id="e2e-tests">
-        <h2>E2E tests configuration</h2>
-      <pre class="fragment"><code class="javascript" contenteditable data-trim>
+<section>
+	<section id="e2e-tests">
+			<h2>E2E tests configuration</h2>
+		  <pre class="fragment"><code class="javascript" contenteditable data-trim>
 				// install protractor globally with the node package manager
 npm install -g protractor
-      </code></pre>
-      <pre class="fragment"><code class="javascript" contenteditable data-trim>
+		  </code></pre>
+		  <pre class="fragment"><code class="javascript" contenteditable data-trim>
 		  // download webdriver 
 webdriver-manager update
-      </code></pre>
-      <pre class="fragment"><code class="javascript" contenteditable data-trim>
+		  </code></pre>
+		  <pre class="fragment"><code class="javascript" contenteditable data-trim>
 		  // start selenium server
 webdriver-manager start
-      </code></pre>
-        <pre class="fragment"><code class="javascript" contenteditable data-trim>
+		  </code></pre>
+			<pre class="fragment"><code class="javascript" contenteditable data-trim>
 			// prepare the configuration file
 exports.config = {
-    seleniumAddress: 'http://localhost:4444/wd/hub',
-    specs: ['todo-spec.js']
+	seleniumAddress: 'http://localhost:4444/wd/hub',
+	specs: ['todo-spec.js']
 };
-        </code></pre>
-        <pre class="fragment"><code class="javascript" contenteditable data-trim>
+			</code></pre>
+			<pre class="fragment"><code class="javascript" contenteditable data-trim>
 			// run e2e tests
 protractor [name-of-config-file]
-        </code></pre>
-    </section>
-	
+			</code></pre>
+	</section>
+		
 	<section id="e2e-config-file">
-        <h2>Configuration file options</h2>
-		<pre><code class="javascript" contenteditable data-trim>
+			<h2>Configuration file options</h2>
+			<pre><code class="javascript" contenteditable data-trim>
 			// running tests in other browsers
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js'],
   capabilities: {
-    browserName: 'firefox'
+	browserName: 'firefox'
   }
 }
 
@@ -393,15 +398,17 @@ exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js'],
   multiCapabilities: [{
-    browserName: 'firefox'
+	browserName: 'firefox'
   }, {
-    browserName: 'chrome'
+	browserName: 'chrome'
   }]
 }
-        </code></pre>
-        <p><small><a href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js">https://github.com/angular/protractor/blob/master/docs/referenceConf.js</a></small></p>
-    </section>
+			</code></pre>
+			<p><small><a href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js">https://github.com/angular/protractor/blob/master/docs/referenceConf.js</a></small></p>
+	</section>
+</section>
 
+<section>
 	<section id="protractor-locators">
         <h2>Protractor locators</h2>
 		<pre><code class="javascript" contenteditable data-trim>
@@ -448,6 +455,7 @@ el.getAttribute('value');
         </code></pre>
         <p><small><a href="https://angular.github.io/protractor/#/api?view=ElementFinder">https://angular.github.io/protractor/#/api?view=ElementFinder</a></small></p>
     </section>
+</section>
 
     <section id="page-objects">
         <h2>Page Objects</h2>
