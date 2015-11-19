@@ -57,10 +57,12 @@
 		<ol>
 			<li><a href="#/tools">Tools</a></li>
 			<li><a href="#/jasmine-basics">Structuring tests</a></li>
+			<li><a href="#/karma-config">Karma configuration</a></li>
 			<li><a href="#/testing-controllers">Testing Controllers</a></li>
 			<li><a href="#/testing-services">Testing Services</a></li>
-			<li><a href="#/testing-directives">Testing Directives</a></li>
-			<li><a href="#/e2e-tests">E2E tests</a></li>
+			<!--<li><a href="#/testing-directives">Testing Directives</a></li>-->
+			<li><a href="#/e2e-tests">E2E tests configuration</a></li>
+			<li><a href="#/protractor-locators">Protractor locators</a></li>
 		</ol>
 	</section>
 
@@ -191,7 +193,7 @@ angular.module('sampleModule').controller('CalculatorCntl', function($scope){
 	'use strict';
 
 	$scope.factorial = function(n){};
-	$scope.division = function(a, b){};
+	$scope.divide = function(a, b){};
 });
 
 // 3. specify appropriate files in the karma config file
@@ -327,7 +329,7 @@ it('should load books', function () {
 	</section>
 </section>
 
-<section id="testing-directives">
+<!--<section id="testing-directives">
         <h2>Testing a directive</h2>
       <pre><code class="javascript" contenteditable data-trim>
           describe('testing directive', function() {
@@ -350,7 +352,7 @@ it('should load books', function () {
           });
 });
       </code></pre>
- </section>
+ </section>-->
 	
 
 <section>
