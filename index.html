@@ -70,7 +70,7 @@
 		<h2>Exercises</h2>
 		<ol>
 			<li><a href="#/test-controller-exercise">Test a controller</a></li>
-			<li><a href="#/page-object-exercise">Add a page object</a></li>
+			<li><a href="#/page-object-exercise">Add an e2e test</a></li>
 		</ol>
 	</section>
 </section>
@@ -493,14 +493,13 @@ ctrl + C
     </section>
 	
 	<section id="page-object-exercise">
-    <h2>Exercise - create a page object</h2>
+    <h2>Exercise - create an e2e test</h2>
       <pre><code class="javascript" contenteditable data-trim>
-      // 1. create a page object for table details dialog with table status getter
+      // 1. create / re-use a page object for table list with repeater selector
 
-// 2. use page object in a test together with other page objects
-// - sign in to table management (use SignInPage)
-// - select the first table in the list click edit button (use TableListPage)
-// - get the table status (create and use TableDetailsPage) and assert it
+// 2. sign in to table management (use SignInPage)
+
+// 3. Assert number of tables
       </code></pre>
 </section>
 
