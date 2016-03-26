@@ -493,14 +493,18 @@ ctrl + C
     </section>
 	
 	<section id="page-object-exercise">
-    <h2>Exercise - create a page object</h2>
+    <h2>Exercise - create a table list PO</h2>
       <pre><code class="javascript" contenteditable data-trim>
-      // 1. create a page object for table details dialog with table status getter
+      // 1. create a page object for tables list dialog
+// - page object should have nextPage and getNumOfTables function
+// - nextPage has to click on the next page button (use for example by.css selector)
+// - getNumOfTables has to retrieve number of rows (use for example by.repeater selector)	  
 
-// 2. use page object in a test together with other page objects
-// - sign in to table management (use SignInPage)
-// - select the first table in the list click edit button (use TableListPage)
-// - get the table status (create and use TableDetailsPage) and assert it
+// 2. use page object in a test together with signIn page object
+// - sign in to table management
+// - assert number of rows on the first page
+// - move to the second page
+// - assert number of tables on the second page
       </code></pre>
 </section>
 
