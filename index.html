@@ -44,7 +44,7 @@
 <div class="slides">
 <section id="start">
     <h3><strong>Testing AngularJS applications</strong></h3>
-    <h2><img class="logo" src="img/AngularJS-large.png"></h2>
+    <h3><img class="logo" src="img/AngularJS-large.png"></h3>
 
     <p>
         <small>Tomasz Szewców</small>
@@ -53,7 +53,7 @@
 
 <section>
 	<section id="agenda">
-		<h2>Agenda</h2>
+		<h3>Agenda</h3>
 		<ol>
 			<li><a href="#/tools">Tools</a></li>
 			<li><a href="#/jasmine-basics">Structuring tests</a></li>
@@ -67,7 +67,7 @@
 	</section>
 
 	<section id="exercises">
-		<h2>Exercises</h2>
+		<h3>Exercises</h3>
 		<ol>
 			<li><a href="#/test-controller-exercise">Test a controller</a></li>
 			<li><a href="#/page-object-exercise">Add a page object</a></li>
@@ -97,7 +97,7 @@
 </section>
 
 <section id="jasmine-basics">
-    <h2>Structuring tests</h2>
+    <h3>Structuring tests</h3>
       <pre><code class="javascript" contenteditable data-trim>
           describe('A suite', function() {
       it('contains spec with an expectation', function() {
@@ -109,7 +109,7 @@
 
 <section>
 	<section id="karma-config">
-		<h2>Karma configuration</h2>
+		<h3>Karma configuration</h3>
 		  <pre class="fragment"><code class="javascript" contenteditable data-trim>
 // install Karma
 npm install karma
@@ -131,7 +131,7 @@ karma start / init / run
 	</section>
 
 	<section id="karma-config-file">
-		<h2>Karma configuration file</h2>
+		<h3>Karma configuration file</h3>
 		  <pre><code class="javascript" contenteditable data-trim>
 // can be created with karma init command
 module.exports = function (config) {
@@ -157,7 +157,7 @@ module.exports = function (config) {
 
 <section>
 	<section id="testing-controllers">
-		<h2>Testing a controller</h2>
+		<h3>Testing a controller</h3>
 		  <pre><code class="javascript" contenteditable data-trim>
 describe('SampleCntl tests', function() {
 	'use strict';
@@ -175,6 +175,33 @@ describe('SampleCntl tests', function() {
 		it('some spec', function() {
 			// given 
 			// when 
+			$scope.someFunction();
+			// then
+		});
+	});
+});
+		  </code></pre>
+	</section>
+	
+	<section>
+		<h3>Testing a controller - alternative</h3>
+		  <pre><code class="javascript" contenteditable data-trim>
+describe('SampleCntl tests', function() {
+	'use strict';
+
+	var cntl;
+
+	beforeEach(module('someModule'));
+
+	beforeEach(inject(function($controller){
+		cntl = $controller('SampleCntl', {});
+	}));
+
+	describe('some suite', function() {
+		it('some spec', function() {
+			// given 
+			// when 
+			cntl.someFunction();
 			// then
 		});
 	});
@@ -183,17 +210,17 @@ describe('SampleCntl tests', function() {
 	</section>
 
 	<section id="test-controller-exercise">
-		<h2>Exercise - test a controller</h2>
+		<h3>Exercise - test a controller</h3>
 		  <pre><code class="javascript" contenteditable data-trim>
 	  // 1. create a sample angular module
 angular.module('sampleModule', []);
 
-// 2. create a calculator controller with 2 $scope functions
-angular.module('sampleModule').controller('CalculatorCntl', function($scope){
+// 2. create a calculator controller with 2 functions
+angular.module('sampleModule').controller('CalculatorCntl', function(){
 	'use strict';
 
-	$scope.factorial = function(n){};
-	$scope.divide = function(a, b){};
+	this.factorial = function(n){};
+	this.divide = function(a, b){};
 });
 
 // 3. specify appropriate files in the karma config file
@@ -203,27 +230,26 @@ angular.module('sampleModule').controller('CalculatorCntl', function($scope){
 	</section>
 
 	<section id="testing-controller-mocks">
-		<h2>Testing controller with mocks</h2>
+		<h3>Testing controller with mocks</h3>
 		  <pre><code class="javascript" contenteditable data-trim>
 		// sample controller code
-angular.module('someModule').controller('SomeCntl', function($scope, $location){
+angular.module('someModule').controller('SomeCntl', function($location){
 	'use strict';
 	
-	$scope.goToDialog = function(path){
+	this.goToDialog = function(path){
 		$location.path(path);
-	}
+	};
 });
 
 // test code
 
-var $scope, locationMock = {
+var cntl, locationMock = {
 	path: angular.noop
 };
 			
-beforeEach(inject(function($controller, $rootScope){
-	$scope = $rootScope.$new();
+beforeEach(inject(function($controller){
 	// injection of mocked $location service
-	$controller('SomeCntl', {$scope: $scope, $location: locationMock});
+	cntl = $controller('SomeCntl', {$location: locationMock});
 }));
 		  </code></pre>
 	</section>
@@ -231,7 +257,7 @@ beforeEach(inject(function($controller, $rootScope){
 
 <section>
 	<section id="testing-services">
-			<h2>Testing a service</h2>
+			<h3>Testing a service</h3>
 		  <pre><code class="javascript" contenteditable data-trim>
 	  describe('data service tests', function () {
 	  'use strict';
@@ -259,7 +285,7 @@ beforeEach(inject(function($controller, $rootScope){
 	</section>
 
 	<section id="testing-services-mocks">
-		<h2>Testing service with mocks</h2>
+		<h3>Testing service with mocks</h3>
 		  <pre><code class="javascript" contenteditable data-trim>
 // sample service code
 angular.module('someModule').factory('serviceUnderTests', function('otherService'){
@@ -295,7 +321,7 @@ beforeEach(function(_serviceUnderTests_){
 	</section>
 
 	<section id="testing-services-http-backend">
-		<h2>Testing with $httpBackend</h2>
+		<h3>Testing with $httpBackend</h3>
 		  <pre><code class="javascript" contenteditable data-trim>
 var booksData, $httpBackend;
 
@@ -330,7 +356,7 @@ it('should load books', function () {
 </section>
 
 <!--<section id="testing-directives">
-        <h2>Testing a directive</h2>
+        <h3>Testing a directive</h3>
       <pre><code class="javascript" contenteditable data-trim>
           describe('testing directive', function() {
           'use strict';
@@ -357,7 +383,7 @@ it('should load books', function () {
 
 <section>
 	<section id="e2e-tests">
-			<h2>E2E tests configuration</h2>
+			<h3>E2E tests configuration</h3>
 		  <pre class="fragment"><code class="javascript" contenteditable data-trim>
 				// install protractor globally with the node package manager
 npm install -g protractor
@@ -384,7 +410,7 @@ protractor [name-of-config-file]
 	</section>
 		
 	<section id="e2e-config-file">
-			<h2>Configuration file options</h2>
+			<h3>Configuration file options</h3>
 			<pre><code class="javascript" contenteditable data-trim>
 			// running tests in other browsers
 exports.config = {
@@ -412,7 +438,7 @@ exports.config = {
 
 <section>
 	<section id="protractor-locators">
-        <h2>Protractor locators</h2>
+        <h3>Protractor locators</h3>
 		<pre><code class="javascript" contenteditable data-trim>
 		// by binding
 element(by.binding('item.name'));
@@ -439,7 +465,7 @@ element.all(by.repeater('repeater'));
     </section>
 	
 	<section id="element-actions">
-        <h2>Actions</h2>
+        <h3>Actions</h3>
 		<pre><code class="javascript" contenteditable data-trim>
 		var el = element(locator);
 
@@ -460,7 +486,7 @@ el.getAttribute('value');
 </section>
 
     <section id="page-objects">
-        <h2>Page Objects</h2>
+        <h3>Page Objects</h3>
         <ul>
             <li>The methods represent the services that the page offers</li>
             <li>Try not to expose the internals of the page</li>
@@ -473,7 +499,7 @@ el.getAttribute('value');
     </section>
 	
 	<section id="e2e-debugging">
-        <h2>Debugging</h2>
+        <h3>Debugging</h3>
          <pre class="fragment"><code class="javascript" contenteditable data-trim>
 // set breakpoint
 browser.pause();
@@ -493,7 +519,7 @@ ctrl + C
     </section>
 	
 	<section id="page-object-exercise">
-    <h2>Exercise - create a table list PO</h2>
+    <h3>Exercise - create a table list PO</h3>
       <pre><code class="javascript" contenteditable data-trim>
       // 1. create a page object for tables list dialog
 // - page object should have nextPage and getNumOfTables function
